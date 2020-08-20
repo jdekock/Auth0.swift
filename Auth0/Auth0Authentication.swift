@@ -400,7 +400,7 @@ struct Auth0Authentication: Authentication {
             "phone_number": phoneNumber
         ]
         
-        let enroll = URL(string: "/mfa/enroll", relativeTo: self.url)!
+        let enroll = URL(string: "/mfa/associate", relativeTo: self.url)!
         return Request(session: session,
                        url: enroll,
                        method: "POST",
