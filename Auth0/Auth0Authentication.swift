@@ -395,8 +395,8 @@ struct Auth0Authentication: Authentication {
 
     func associatePhoneNumber(mfaToken: String, phoneNumber: String) -> Request<OOB, AuthenticationError> {
         var payload: [String: Any] = [
-            "authenticator_types": Array(arrayLiteral: ["oob",""]),
-            "oob_channels": Array(arrayLiteral: ["sms",""]),
+            "authenticator_types": ["oob"],
+            "oob_channels": ["sms"],
             "phone_number": phoneNumber
         ]
         
@@ -405,6 +405,7 @@ struct Auth0Authentication: Authentication {
                        url: enroll,
                        method: "POST",
                        handle: codable,
+                       payload: payload,
                        headers: ["Authorization": "Bearer \(mfaToken)"],
                        logger: self.logger,
                        telemetry: self.telemetry)
