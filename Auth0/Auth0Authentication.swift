@@ -404,7 +404,7 @@ struct Auth0Authentication: Authentication {
         return Request(session: session,
                        url: enroll,
                        method: "POST",
-                       handle: authenticationObject,
+                       handle: codable,
                        headers: ["Authorization": "Bearer \(mfaToken)"],
                        logger: self.logger,
                        telemetry: self.telemetry)

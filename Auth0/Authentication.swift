@@ -1298,7 +1298,9 @@ public extension Authentication {
      - parameter phoneNuber: the phone number to send the SMS to including the country dialing code
      - returns: a request
      */
-    func associatePhoneNumber(mfaToken: String, phoneNumber: String) -> Request<OOB, AuthenticationError>
+    func associatePhoneNumber(mfaToken: String, phoneNumber: String) -> Request<OOB, AuthenticationError> {
+        return self.associatePhoneNumber(mfaToken: mfaToken, phoneNumber: phoneNumber)
+    }
     
     /**
      Verifies the MFA using an OOB challenge using the `/oauth/token` endpoint.
@@ -1314,5 +1316,7 @@ public extension Authentication {
      - parameter oobCode: token received from the associate phone number response
      - parameter bindingCode: verification code received by SMS
      */
-    func verifyOob(mfaToken: String, oobCode: String, bindingCode: String) -> Request<Credentials, AuthenticationError>
+    func verifyOob(mfaToken: String, oobCode: String, bindingCode: String) -> Request<Credentials, AuthenticationError> {
+        return self.verifyOob(mfaToken: mfaToken, oobCode: oobCode, bindingCode: bindingCode)
+    }
 }
