@@ -22,7 +22,7 @@
 
 import Foundation
 
-public struct OOB: Codable {
+public class OOB: Codable {
     @objc public let oobCode: String
     @objc public let bindingMethod: String
     @objc public let authenticatorType: String
