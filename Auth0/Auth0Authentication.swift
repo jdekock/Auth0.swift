@@ -419,9 +419,7 @@ struct Auth0Authentication: Authentication {
             "oob_code": oobCode,
             "biding_code": bindingCode
         ]
-        if let parameters = parameters {
-            parameters.forEach { key, value in payload[key] = value }
-        }
+        
         return Request(session: session,
                        url: resourceOwner,
                        method: "POST",
