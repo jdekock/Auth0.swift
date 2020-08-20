@@ -23,10 +23,10 @@
 import Foundation
 
 public struct OOB: Codable {
-    let oobCode: String
-    let bindingMethod: String
-    let authenticatorType: String
-    let oobChannel: String
+    @objc public let oobCode: String
+    @objc public let bindingMethod: String
+    @objc public let authenticatorType: String
+    @objc public let oobChannel: String
     
     enum CodingKeys: String, CodingKey {
         case oobCode = "oob_code"
@@ -34,6 +34,4 @@ public struct OOB: Codable {
         case authenticatorType = "authenticator_type"
         case oobChannel = "oob_channel"
     }
-    
-    public init() {}
 }
