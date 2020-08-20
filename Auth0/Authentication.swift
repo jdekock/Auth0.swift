@@ -1283,5 +1283,36 @@ public extension Authentication {
     func tokenExchange(withAppleAuthorizationCode authCode: String, scope: String? = "openid profile offline_access", audience: String? = nil, fullName: PersonNameComponents? = nil) -> Request<Credentials, AuthenticationError> {
         return self.tokenExchange(withAppleAuthorizationCode: authCode, scope: scope, audience: audience, fullName: fullName)
     }
+    
+    /**
+     Enrolls the user for MFA via SMS using the `/mfa/enroll` endpoint.
 
+     ```
+     Auth0
+        .authentication(clientId: clientId, domain: "samples.auth0.com")
+        .associatePhoneNumber(mfaToken: mfaToken, phoneNumber: "+1234567890")
+        .start { print($0) }
+     ```
+     
+     - parameter mfaToken: token obtained by authenticating the user
+     - parameter phoneNuber: the phone number to send the SMS to including the country dialing code
+     - returns: a request
+     */
+    func associatePhoneNumber(mfaToken: String, phoneNumber: String) -> Request<OOB, AuthenticationError>
+    
+    /**
+     Verifies the MFA using an OOB challenge using the `/oauth/token` endpoint.
+
+     ```
+     Auth0
+        .authentication(clientId: clientId, domain: "samples.auth0.com")
+        .verifyOob(mfaToken: mfaToken, oobCode: oobCode, bindingCode: "123456")
+        .start { print($0) }
+     ```
+     
+     - parameter mfaToken: token from the mfa_required error
+     - parameter oobCode: token received from the associate phone number response
+     - parameter bindingCode: verification code received by SMS
+     */
+    func verifyOob(mfaToken: String, oobCode: String, bindingCode: String) -> Request<Credentials, AuthenticationError>
 }

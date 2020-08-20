@@ -143,6 +143,11 @@ public class AuthenticationError: Auth0Error, CustomStringConvertible {
     public var isVerificationRequired: Bool {
         return self.code == "requires_verification"
     }
+    
+    /// When you have a pending challenge waiting
+    public var isAuthorizationPending: Bool {
+        return self.code == "authorization_pending"
+    }
 
     /**
      Returns a value from error `info` dictionary

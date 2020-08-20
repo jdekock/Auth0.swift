@@ -393,6 +393,44 @@ struct Auth0Authentication: Authentication {
                        telemetry: self.telemetry)
     }
 
+    func associatePhoneNumber(mfaToken: String, phoneNumber: String) -> Request<OOB, AuthenticationError> {
+        var payload: [String: Any] = [
+            "authenticator_types": ["oob"],
+            "oob_channels": ["sms"],
+            "phone_number": phoneNumber
+        ]
+        
+        let enroll = URL(string: "/mfa/enroll", relativeTo: self.url)!
+        return Request(session: session,
+                       url: enroll,
+                       method: "POST",
+                       handle: authenticationObject,
+                       headers: ["Authorization": "Bearer \(mfaToken)"],
+                       logger: self.logger,
+                       telemetry: self.telemetry)
+    }
+    
+    func verifyOob(mfaToken: String, oobCode: String, bindingCode: String) -> Request<Credentials, AuthenticationError> {
+        let resourceOwner = URL(string: "/oauth/token", relativeTo: self.url)!
+        var payload: [String: Any] = [
+            "client_id": self.clientId,
+            "grant_type": "http://auth0.com/oauth/grant-type/mfa-oob",
+            "mfa_token": mfaToken,
+            "oob_code": oobCode,
+            "biding_code": bindingCode
+        ]
+        if let parameters = parameters {
+            parameters.forEach { key, value in payload[key] = value }
+        }
+        return Request(session: session,
+                       url: resourceOwner,
+                       method: "POST",
+                       handle: authenticationObject,
+                       payload: payload,
+                       logger: self.logger,
+                       telemetry: self.telemetry)
+    }
+    
 }
 
 // MARK: - Private Methods
