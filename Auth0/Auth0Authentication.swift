@@ -418,7 +418,7 @@ struct Auth0Authentication: Authentication {
             "grant_type": "http://auth0.com/oauth/grant-type/mfa-oob",
             "mfa_token": mfaToken,
             "oob_code": oobCode,
-            "biding_code": bindingCode
+            "binding_code": bindingCode
         ]
         
         return Request(session: session,
