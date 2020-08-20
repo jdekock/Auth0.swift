@@ -22,7 +22,7 @@
 
 import Foundation
 
-public class OOB: Codable {
+public struct OOB: Codable {
     let oobCode: String
     let bindingMethod: String
     let authenticatorType: String
@@ -34,4 +34,6 @@ public class OOB: Codable {
         case authenticatorType = "authenticator_type"
         case oobChannel = "oob_channel"
     }
+    
+    public init() {}
 }
