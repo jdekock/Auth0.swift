@@ -27,5 +27,11 @@ public struct OOB: Codable {
     let bindingMethod: String
     let authenticatorType: String
     let oobChannel: String
-    let recoveryCodes: [String]
+    
+    enum CodingKeys: String, CodingKey {
+        case oobCode = "oob_code"
+        case bindingMethod = "binding_method"
+        case authenticatorType = "authenticator_type"
+        case oobChannel = "oob_channel"
+    }
 }
