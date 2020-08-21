@@ -399,10 +399,9 @@ struct Auth0Authentication: Authentication {
             "oob_channels": ["sms"],
             "phone_number": phoneNumber
         ]
-        
-        let enroll = URL(string: "/mfa/associate", relativeTo: self.url)!
+        let associate = URL(string: "/mfa/associate", relativeTo: self.url)!
         return Request(session: session,
-                       url: enroll,
+                       url: associate,
                        method: "POST",
                        handle: codable,
                        payload: payload,
@@ -412,7 +411,6 @@ struct Auth0Authentication: Authentication {
     }
     
     func verifyOob(mfaToken: String, oobCode: String, bindingCode: String) -> Request<Credentials, AuthenticationError> {
-        let resourceOwner = URL(string: "/oauth/token", relativeTo: self.url)!
         var payload: [String: Any] = [
             "client_id": self.clientId,
             "grant_type": "http://auth0.com/oauth/grant-type/mfa-oob",
@@ -420,7 +418,7 @@ struct Auth0Authentication: Authentication {
             "oob_code": oobCode,
             "binding_code": bindingCode
         ]
-        
+        let token = URL(string: "/oauth/token", relativeTo: self.url)!
         return Request(session: session,
                        url: resourceOwner,
                        method: "POST",
@@ -430,6 +428,32 @@ struct Auth0Authentication: Authentication {
                        telemetry: self.telemetry)
     }
     
+    func listAuthenticators(mfaToken: String) -> Request<[Authenticator], AuthenticationError> {
+        let authenticators = URL(string: "/mfa/authenticators", relativeTo: self.url)!
+        return Request(session: session,
+                       url: authenticators,
+                       method: "GET",
+                       handle: codable,
+                       headers: ["Authorization": "Bearer \(mfaToken)"],
+                       logger: self.logger,
+                       telemetry: self.telemetry)
+    }
+    
+    func requestChallenge(mfaToken: String, challengeType: String, authenticatorId: String) -> Request<Credentials, AuthenticationError> {
+        var payload: [String: Any] = [
+            "mfa_token": mfaToken,
+            "challenge_type": challengeType,
+            "authenticator_id": authenticatorId
+        ]
+        let token = URL(string: "/mfa/challenge", relativeTo: self.url)!
+        return Request(session: session,
+                       url: resourceOwner,
+                       method: "POST",
+                       handle: authenticationObject,
+                       payload: payload,
+                       logger: self.logger,
+                       telemetry: self.telemetry)
+    }
 }
 
 // MARK: - Private Methods

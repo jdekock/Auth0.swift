@@ -721,11 +721,41 @@ public protocol Authentication: Trackable, Loggable {
         .start { print($0) }
      ```
      
-     - parameter mfaToken: token from the mfa_required error
+     - parameter mfaToken: token received from mfa_required error.
      - parameter oobCode: token received from the associate phone number response
      - parameter bindingCode: verification code received by SMS
      */
     func verifyOob(mfaToken: String, oobCode: String, bindingCode: String) -> Request<Credentials, AuthenticationError>
+    
+    /**
+     List the associated authenticators using the  `/mfa/authenticators` endpoint.
+
+     ```
+     Auth0
+        .authentication(clientId: clientId, domain: "samples.auth0.com")
+        .listAuthenticators(mfaToken: mfaToken)
+        .start { print($0) }
+     ```
+     
+     - parameter mfaToken: token received from mfa_required error.
+     */
+    func listAuthenticators(mfaToken: String) -> Request<[Authenticator], AuthenticationError>
+    
+    /**
+     List the associated authenticators using the  `/mfa/authenticators` endpoint.
+
+     ```
+     Auth0
+        .authentication(clientId: clientId, domain: "samples.auth0.com")
+        .listAuthenticators(mfaToken: mfaToken)
+        .start { print($0) }
+     ```
+     
+     - parameter mfaToken: token received from mfa_required error.
+     - parameter challengeType: a whitespace-separated list of the challenges types accepted by your application. Accepted challenge types are oob or otp.
+     - parameter authenticatorId: the ID of the authenticator to challenge.
+     */
+    func requestChallenge(mfaToken: String, challengeType: String, authenticatorId: String) -> Request<Challenge, AuthenticationError>
 
 #if WEB_AUTH_PLATFORM
     /**
