@@ -449,7 +449,7 @@ struct Auth0Authentication: Authentication {
         return Request(session: session,
                        url: challenge,
                        method: "POST",
-                       handle: authenticationObject,
+                       handle: codable,
                        payload: payload,
                        logger: self.logger,
                        telemetry: self.telemetry)
