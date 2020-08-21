@@ -420,7 +420,7 @@ struct Auth0Authentication: Authentication {
         ]
         let token = URL(string: "/oauth/token", relativeTo: self.url)!
         return Request(session: session,
-                       url: resourceOwner,
+                       url: token,
                        method: "POST",
                        handle: authenticationObject,
                        payload: payload,
@@ -439,15 +439,15 @@ struct Auth0Authentication: Authentication {
                        telemetry: self.telemetry)
     }
     
-    func requestChallenge(mfaToken: String, challengeType: String, authenticatorId: String) -> Request<Credentials, AuthenticationError> {
+    func requestChallenge(mfaToken: String, challengeType: String, authenticatorId: String) -> Request<Challenge, AuthenticationError> {
         var payload: [String: Any] = [
             "mfa_token": mfaToken,
             "challenge_type": challengeType,
             "authenticator_id": authenticatorId
         ]
-        let token = URL(string: "/mfa/challenge", relativeTo: self.url)!
+        let challenge = URL(string: "/mfa/challenge", relativeTo: self.url)!
         return Request(session: session,
-                       url: resourceOwner,
+                       url: challenge,
                        method: "POST",
                        handle: authenticationObject,
                        payload: payload,
