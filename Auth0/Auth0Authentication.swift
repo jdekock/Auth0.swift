@@ -441,6 +441,7 @@ struct Auth0Authentication: Authentication {
     
     func requestChallenge(mfaToken: String, challengeType: String, authenticatorId: String) -> Request<Challenge, AuthenticationError> {
         var payload: [String: Any] = [
+            "client_id": self.clientId,
             "mfa_token": mfaToken,
             "challenge_type": challengeType,
             "authenticator_id": authenticatorId
@@ -451,7 +452,6 @@ struct Auth0Authentication: Authentication {
                        method: "POST",
                        handle: codable,
                        payload: payload,
-                       headers: ["Authorization": "Bearer \(mfaToken)"],
                        logger: self.logger,
                        telemetry: self.telemetry)
     }
