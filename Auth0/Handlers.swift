@@ -54,7 +54,7 @@ func codable<T: Codable>(from response: Response<AuthenticationError>, callback:
 func codableArray<T: Codable>(from response: Response<AuthenticationError>, callback: Request<T, AuthenticationError>.Callback) {
     do {
         if let array = try response.result() as? [[String: Any]] {
-            let data = try JSONSerialization.data(withJSONObject: dictionary)
+            let data = try JSONSerialization.data(withJSONObject: array)
             let decoder = JSONDecoder()
             let decodedObject = try decoder.decode(T.self, from: data)
             callback(.success(result: decodedObject))
