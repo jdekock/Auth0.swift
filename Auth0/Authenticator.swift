@@ -25,11 +25,15 @@ import Foundation
 public class Authenticator: Codable {
     @objc public let id: String
     @objc public let authenticatorType: String
+    @objc public let oobChannel: String?
+    @objc public let name: String?
     @objc public let active: Bool
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case authenticatorType = "authenticator_type"
+        case oobChannel = "oob_channel"
+        case name = "name"
         case active = "active"
     }
 }
