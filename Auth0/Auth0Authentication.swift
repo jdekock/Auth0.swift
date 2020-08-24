@@ -428,12 +428,12 @@ struct Auth0Authentication: Authentication {
                        telemetry: self.telemetry)
     }
     
-    func listAuthenticators(mfaToken: String) -> Request<Authenticator, AuthenticationError> {
+    func listAuthenticators(mfaToken: String) -> Request<[Authenticator], AuthenticationError> {
         let authenticators = URL(string: "/mfa/authenticators", relativeTo: self.url)!
         return Request(session: session,
                        url: authenticators,
                        method: "GET",
-                       handle: codable,
+                       handle: codableArray,
                        headers: ["Authorization": "Bearer \(mfaToken)"],
                        logger: self.logger,
                        telemetry: self.telemetry)
