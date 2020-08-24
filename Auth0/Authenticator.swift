@@ -36,4 +36,8 @@ public class Authenticator: Codable {
         case name = "name"
         case active = "active"
     }
+    
+    public init() {
+
+    }
 }
