@@ -739,7 +739,7 @@ public protocol Authentication: Trackable, Loggable {
      
      - parameter mfaToken: token received from mfa_required error.
      */
-    func listAuthenticators(mfaToken: String) -> Request<[Authenticator], AuthenticationError>
+    func listAuthenticators(mfaToken: String) -> Request<Authenticator, AuthenticationError>
     
     /**
      List the associated authenticators using the  `/mfa/authenticators` endpoint.
