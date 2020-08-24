@@ -451,6 +451,7 @@ struct Auth0Authentication: Authentication {
                        method: "POST",
                        handle: codable,
                        payload: payload,
+                       headers: ["Authorization": "Bearer \(mfaToken)"],
                        logger: self.logger,
                        telemetry: self.telemetry)
     }
